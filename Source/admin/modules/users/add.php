@@ -5,25 +5,27 @@
 		$account = isset($_POST['txtAcc']) ? $_POST['txtAcc'] : '';
 		$role_id = isset($_POST['txtRole']) ? $_POST['txtRole'] : '';
 		$password = isset($_POST['txtPass']) ? $_POST['txtPass'] : '';
-		$password = isset($_POST['txtFullname']) ? $_POST['txtFullname'] : '';
+		$fulname = isset($_POST['txtFullname']) ? $_POST['txtFullname'] : '';
 
 		$sql_check = sprintf("SELECT * FROM users WHERE account='%s", $account);
 		$rs_check = @mysqli_query($connect, $sql_check);
-		if(@mysqli_num_rows($rs_check) == 0 && $account != '' && $role_id != '' && $password != ''){
+		if(@mysqli_num_rows($rs_check) == 0 && $account != '' && $role_id != '' && $password != '' && $fulname != ''){
 			$sql_ins_user = sprintf("INSERT INTO users(role_id,account,password,fullname)
-				VALUES(%d,'%s','%s','%s')",$role_id,$account,$password,$password);
+				VALUES(%d,'%s','%s','%s')",
+				$role_id,$account,$password,$fulname);
 			@mysqli_query($connect, $sql_ins_user);
 			header("Location: ?m=users&act=list");
-			echo "<script>alert('Thêm thành công');</script>";
 		}
 		else{
-			echo "<script>alert('Tài khoản này đã tồn tại!');</script>";
+			echo "<script>alert('Thêm không thành công. Vui lòng kiểm tra lại thông tin!');</script>";
 		}
 	}
 ?>
 <div>
+	<p id="power">Thêm tài khoản mới</p>
 	<fieldset>
-		<legend>Thêm tài khoản mới</legend>
+		<legend>Nhập thông tin tài khoản</legend>
+		<p>(*) Thông tin bắt buộc</p>
 		<form action="" method="POST" id="frmAdd" name="frmAdd">
 			<table cellpadding="5">
 				<tr>
@@ -52,7 +54,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" id="btnAdd" name="btnAdd" value="Add"></td>
+					<td><input type="submit" id="btnAdd" name="btnAdd" value="Thêm" onclick="return confirm('Thêm?');"></td>
 				</tr>
 			</table>
 		</form>

@@ -1,17 +1,23 @@
 
-body{background: #FFFFFF;}
-a{text-decoration: none;}
+body{background: white;}
+a{text-decoration: none; font-weight: bold; color: #000080; font-style: italic;}
 a:hover{color: #FE9301;}
 .clear{clear: both;}
+table{border-collapse: collapse;}
+textarea{width: 100%;}
 #wrapper{width:970px; margin: auto;}
 #header{}
 #header-top{}
 #header-bottom{}
 #header-bottom-left{float: left;}
+#header-bottom-left a{font-size: 20px; color: #727272; font-weight:normal;}
 #header-bottom-right{float: right;}
 #content{}
-#content-menu{text-align: center;}
+#content-menu{text-align: center; text-transform: uppercase;}
 #content-menu ul{margin: 0px;}
 #content-menu li{list-style: none; display: inline; margin:0px 10px;}
 #content-menu li a{font-size: 20px;}
-#footer{text-align: center; color: #BFBFBF;}
+#content-menu li a:hover{color: #FF0000;}
+#content-main{margin-top: 20px;}
+#power{font-size: 20px;}
+#footer{text-align: center; color: #808080;}

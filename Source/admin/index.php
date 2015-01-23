@@ -10,6 +10,8 @@
 	$sql_sel = sprintf("SELECT * FROM users WHERE account='%s'", $_SESSION['$account']);
 	$rs_sel = @mysqli_query($connect, $sql_sel);
 	$row_sel = @mysqli_fetch_array($rs_sel);
+
+	$time=getdate(date("U"));
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,10 +23,13 @@
 <body>
 	<div id="wrapper">
 		<div id="header">
-			<div id="header-top">Website tin tức</div>
+			<div id="header-top"><h1>Website tin tức</h1></div>
 			<div id="header-bottom">
-				<div id="header-bottom-left">Tin tức</div>
-				<div id="header-bottom-right">Xin chào: <a href="?m=users&act=profile"><?php echo $row_sel['fullname']  ?></a> | <a href="logout.php">Thoát</a></div>
+				<div id="header-bottom-left"><a>Trang quản lí</a></div>
+				<div id="header-bottom-right">
+					<div>Xin chào: <a href="?m=users&act=profile" title="Xem thông tin cá nhân"><?php echo $row_sel['fullname']  ?></a> | <a href="logout.php">Thoát</a></div>
+					<div><?php echo "$time[weekday], $time[month] $time[mday], $time[year]" ?></div>
+				</div>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -56,7 +61,7 @@
 			</div>
 		</div>
 		<hr>
-		<div id="footer">@Copy right</div>
+		<div id="footer">PHP cơ bản</div>
 	</div>
 	<script type="text/javascript" language="javascript" src="js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" language="javascript" src="js/jquery.validate.js"></script>

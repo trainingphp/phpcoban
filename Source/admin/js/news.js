@@ -5,6 +5,10 @@ $(document).ready(function() {
 				required: true,
 				minlength: 6
 			},
+			txtPassOld:{
+				required: true,
+				minlength: 6
+			},
 			txtPass:{
 				required: true,
 				minlength: 6
@@ -22,6 +26,10 @@ $(document).ready(function() {
 			txtAcc:{
 				required: " Nhập vào tài khoản",
 				minlength: " tài khoản từ 6 ký tự trở lên"
+			},
+			txtPassOld:{
+				required: " Nhập vào mật khẩu cũ",
+				minlength: " Mật khẩu cũ từ 6 ký tự trở lên"
 			},
 			txtPass:{
 				required: " Nhập vào mật khẩu",
