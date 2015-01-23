@@ -1,0 +1,17 @@
+
+body{background: #FFFFFF;}
+a{text-decoration: none;}
+a:hover{color: #FE9301;}
+.clear{clear: both;}
+#wrapper{width:970px; margin: auto;}
+#header{}
+#header-top{}
+#header-bottom{}
+#header-bottom-left{float: left;}
+#header-bottom-right{float: right;}
+#content{}
+#content-menu{text-align: center;}
+#content-menu ul{margin: 0px;}
+#content-menu li{list-style: none; display: inline; margin:0px 10px;}
+#content-menu li a{font-size: 20px;}
+#footer{text-align: center; color: #BFBFBF;}
