@@ -1,3 +1,32 @@
+<?php
+	//Xac dinh tong so hang
+	$sql_tongsohang = sprintf("SELECT * FROM news");
+	$result_tongsohang = @mysqli_query($connect, $sql_tongsohang);
+	$tongsohang = @mysqli_num_rows($result_tongsohang);
+
+	//So hang muon hien thi tren trang
+	$sohanghienthi = 3;
+
+	//So trang hien thi
+	$sotranghienthi = 5;
+
+	//Xac dinh tong so trang
+	$tongsotrang = ceil($tongsohang / $sohanghienthi);
+
+	//Xac dinh trang hien hanh
+	$tranghienhanh = isset($_GET['page']) ? $_GET['page'] : 1;
+	if($tranghienhanh < 1) { 
+		header("Location: ?&act=home&page=1");
+	} elseif ($tranghienhanh > $tongsotrang) {
+		header("Location: ?&act=home&page=$tongsotrang");
+	}
+
+	//Xac dinh ban ghi bat dau theo trang hien hanh
+	$banghibatdau = ($tranghienhanh - 1) * $sohanghienthi;
+
+	$sql_sel_news = sprintf("SELECT * FROM news ORDER BY id DESC LIMIT %d,%d",$banghibatdau,$sohanghienthi);
+	$rs_sel_news = @mysqli_query($connect, $sql_sel_news);
+?>
 <div class="row">
     <div class="col col-md-12">
                         
@@ -13,28 +42,56 @@
     </div>
 </div>
 					
+<?php
+while($row_sel_news = @mysqli_fetch_array($rs_sel_news)){
+?>
 <article class="row">
 	<div class="col col-md-12">
-		<img src="images/templatemo_tn_1.jpg" alt="Pic 1" class="img-thumbnail img-responsive img_left">
-        <h3>Introduction</h3> 
-		<p>Botany is free responsive template from <b>templatemo</b> using <a href="http://getbootstrap.com" rel="nofollow">Bootstrap</a> that can be used for any website. In iaculis lectus vel est luctus, et laoreet dolor scelerisque. Sed a erat nunc. Nam est eros, commodo vitae nisl sed, consectetur dapibus lacus. Ut lectus libero, condimentum quis. Validate <a href="http://validator.w3.org/check?uri=referer" rel="nofollow">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/check/referer" rel="nofollow">CSS</a>.			
-	</p>
+		<img src="images/news/<?php echo $row_sel_news['image'] ?>" alt="Picture" class="img-thumbnail img-responsive img_left" width=290px>
+        <h3><?php echo $row_sel_news['title'] ?></h3> 
+		<p><?php echo $row_sel_news['description'] ?></p>
 		<p><a href="#" class="btn btn-primary" role="button">View More</a></p>
 	</div>								            
 </article>
-<article class="row">
-	<div class="col col-md-12">
-		<img src="images/templatemo_tn_2.jpg" alt="Pic 2" class="img-thumbnail img-responsive img_left">
-        <h3>Sighseeing</h3>
-		<p>In orci tellus, tempor vel neque at, pulvinar dignissim quam. Suspendisse tempus, tortor sed ullamcorper elementum, sapien velit viverra ante, at laoreet mauris sapien tempus quam. Nulla fermentum sapien sapien, ac tincidunt neque suscipit id. Vivamus erat purus, iaculis sit amet velit rhoncus, viverra imperdiet.</p>
-		<p><a href="#" class="btn btn-primary" role="button">View More</a></p>
-	</div>							
-</article>	
-<article class="row">
-	<div class="col col-md-12">
-		<img src="images/templatemo_tn_3.jpg" alt="Pic 3" class="img-thumbnail img-responsive img_left">
-        <h3>Reservations</h3>
-		<p>Donec iaculis non augue sit amet vulputate. Maecenas porta, nisi ac ornare gravida, nulla metus condimentum lorem, in placerat massa erat at eros. Quisque tristique odio in mattis tincidunt. Etiam ac justo ac arcu gravida cursus id eu velit. Duis tincidunt nec elit non porttitor.</p>
-		<p><a href="#" class="btn btn-primary" role="button">View More</a></p>
-	</div>			            
-</article> 
+<?php } ?>
+	<div id="paging" align="center">     	
+		<?php
+        
+        
+        if($tongsotrang <= $sotranghienthi ) 
+        {
+            for($t=1; $t <= $tongsotrang; $t++) {
+                echo '<a href="?&act=home&page='.$t. '">'.$t. '</a> | ';
+            }
+        }
+        else {
+        
+            $sotrangbatdau = 1; 
+            $sotrangketthuc = $sotranghienthi; 
+            
+            if($tranghienhanh > $sotranghienthi / 2) {
+                $sotrangbatdau = $tranghienhanh - ceil($sotranghienthi / 2) + 1;
+                $sotrangketthuc = $tranghienhanh + ceil($sotranghienthi / 2);
+                
+                if($tranghienhanh >= $tongsotrang - ceil($sotranghienthi / 2)) 
+                {
+                    $sotrangbatdau = $tongsotrang - $sotranghienthi;
+                    $sotrangketthuc = $tongsotrang;
+                }
+            }
+        
+            echo '[<a href="?act=home&page=1">Đầu</a>] ';
+            echo '[<a href="?act=home&page='.($tranghienhanh - 1).'">Trước</a>] &nbsp; ';
+            for($t=$sotrangbatdau; $t <= $sotrangketthuc; $t++) {
+                if($t==$tranghienhanh) 
+                {
+                    echo '<a href="?&act=home&page='.$t. '" style="color:red"><b>'.$t. '</b></a> &nbsp; ';
+                } else {
+                    echo '<a href="?&act=home&page='.$t. '">'.$t. '</a> &nbsp; ';
+                }
+            }
+            echo '[<a href="?&act=home&page='.($tranghienhanh + 1).'">Tiếp</a>] ';
+            echo '[<a href="?&act=home&page='.$tongsotrang.'">Cuối</a>]';
+        }
+        ?>
+     </div>

@@ -33,7 +33,7 @@
 							?>
 							<li><a href="<?php echo '?act=categories&id='.$row_sel['id']; ?>"><?php echo $row_sel['name'] ?></a></li>
 							<?php } ?>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="#">Contact</a></li>
 						</ul>
 					</nav> <!-- nav -->	
 					<form  action="#" method="get" class="navbar-form" role="search">
