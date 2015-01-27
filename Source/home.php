@@ -50,7 +50,7 @@ while($row_sel_news = @mysqli_fetch_array($rs_sel_news)){
 		<img src="images/news/<?php echo $row_sel_news['image'] ?>" alt="Picture" class="img-thumbnail img-responsive img_left" width=290px>
         <h3><?php echo $row_sel_news['title'] ?></h3> 
 		<p><?php echo $row_sel_news['description'] ?></p>
-		<p><a href="#" class="btn btn-primary" role="button">View More</a></p>
+		<p><a href="?act=view&id=<?php echo $row_sel_news['id']?>" class="btn btn-primary" role="button">View More</a></p>
 	</div>								            
 </article>
 <?php } ?>

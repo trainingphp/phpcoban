@@ -1,7 +1,7 @@
 <?php
 	$sql_edit_user = sprintf("SELECT users.id,account,password,role_id,name,fullname 
 			FROM users INNER JOIN roles ON users.role_id=roles.id 
-			WHERE account='%s'", $_SESSION['$account']);
+			WHERE account='%s'", $_SESSION['account']);
 	$rs_edit_user = @mysqli_query($connect, $sql_edit_user);
 	$row_edit_user = @mysqli_fetch_array($rs_edit_user);
 	
@@ -24,7 +24,7 @@
 		else if($password != '' && $fullname != ''){
 			$sql_upd_user = sprintf("UPDATE users 
 				SET password='%s',fullname='%s' 
-				WHERE account='%s'",$password,$fullname,$_SESSION['$account']);
+				WHERE account='%s'",$password,$fullname,$_SESSION['account']);
 			@mysqli_query($connect, $sql_upd_user);
 			header("Location: ?m=users&act=profile");
 		}

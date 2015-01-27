@@ -1,7 +1,7 @@
 <?php
 	$sql_sel = sprintf("SELECT users.id,role_id,account,name,fullname 
 			FROM users INNER JOIN roles ON users.role_id=roles.id 
-			WHERE account='%s'", $_SESSION['$account']);
+			WHERE account='%s'", $_SESSION['account']);
 	$rs_sel = @mysqli_query($connect, $sql_sel);
 	$row_sel = @mysqli_fetch_array($rs_sel);
 ?>

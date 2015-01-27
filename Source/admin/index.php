@@ -1,17 +1,21 @@
 <?php
 	session_start();
 	include_once('includes/connect.inc');
-	// include_once('includes/security.php');
-	// if(confirm($con,$_SESSION['$account'], $_SESSION['$password']) == false){
-	// 	header("Location: login.php");
-	// }
-	$_SESSION['$account'] = 'hvquyet';
-	$_SESSION['$role'] = '1';
-	$sql_sel = sprintf("SELECT * FROM users WHERE account='%s'", $_SESSION['$account']);
-	$rs_sel = @mysqli_query($connect, $sql_sel);
-	$row_sel = @mysqli_fetch_array($rs_sel);
+	include_once('includes/security.php');
+	$xacthuc = confirmlg($connect,$_SESSION['account'],$_SESSION['password']);
+	if($xacthuc == false){
+		header("Location: login.php");
+	}else
+	{
+		$sql_sel = sprintf("SELECT * FROM users WHERE account='%s'", $_SESSION['account']);
+		$rs_sel = @mysqli_query($connect, $sql_sel);
+		$row_sel = @mysqli_fetch_array($rs_sel);
 
-	$time=getdate(date("U"));
+		$sql_sel_role = sprintf("SELECT * FROM roles WHERE id=%d",$_SESSION['$role']);
+		$rs_sel_role = @mysqli_query($connect,$sql_sel_role);
+		$row_sel_role = @mysqli_fetch_array($rs_sel_role);
+
+		$time=getdate(date("U"));
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,6 +23,8 @@
 	<title>Trang quản lí</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" href="css/style.css">
+	<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+	<script>tinymce.init({selector:'textarea'});</script>
 </head>
 <body>
 	<div id="wrapper">
@@ -27,7 +33,7 @@
 			<div id="header-bottom">
 				<div id="header-bottom-left"><a>Trang quản lí</a></div>
 				<div id="header-bottom-right">
-					<div>Xin chào: <a href="?m=users&act=profile" title="Xem thông tin cá nhân"><?php echo $row_sel['fullname']  ?></a> | <a href="logout.php">Thoát</a></div>
+					<div>Xin chào: <a href="?m=users&act=profile" title="Xem thông tin cá nhân"><?php echo $_SESSION['nameUser']  ?></a> (<?php echo $row_sel_role['name'] ?>) | <a href="logout.php">Thoát</a></div>
 					<div><?php echo "$time[weekday], $time[month] $time[mday], $time[year]" ?></div>
 				</div>
 				<div class="clear"></div>
@@ -57,6 +63,29 @@
 						$act = 'list';
 						include 'modules/'.$m.'/'.$act.'.php';
 					}
+
+					/**/
+	/*				 $m = isset($_GET['m'])? $_GET['m'] : FALSE;
+                
+	                if( !$m )
+	                {
+	                    include 'Source/home.php';
+	                }
+	                else
+	                {
+	                    if( !is_dir('Source/'.$m) )
+	                    {
+	                        include 'Source/404.php';
+	                    }
+	                    else
+	                    {
+	                        $act = isset($_GET['act'])? (is_file('Source/'.$m.'/'.$_GET['act'].'.php')? $_GET['act'] : 'index') : 'index';
+	                        
+	                        include 'Source/'.$m.'/'.$act.'.php';
+	                    }
+	                }
+
+*/
 				?>
 			</div>
 		</div>
@@ -68,3 +97,4 @@
 	<script type="text/javascript" language="javascript" src="js/news.js"></script>
 </body>
 </html>
+<?php }?>

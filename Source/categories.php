@@ -1,17 +1,47 @@
+<?php 
+	$idCate = isset($_GET['id']) ? $_GET['id'] : '';
+	echo $idCate;
+	//Lay ten category
+	$sqlCate = "select * from categories where id='$idCate'";
+	$rscate = mysqli_query($connect,$sqlCate);
+	$rowCate = mysqli_fetch_array($rscate);
+	//Lay list tin theo category
+	$sql = "select * from news where category_id='$idCate' order by id desc";
+	$rs = mysqli_query($connect,$sql);
+	
+
+?>
+
 
 <div class="row">
     <div class="col col-md-12">
-        <h2>Portfolio</h2>
+        <h2><?php echo $rowCate['name']?></h2>
     </div>
 </div>
                     
 <article class="row">
+	<?php
+		while($row = mysqli_fetch_array($rs)){
+	?>
 	<div class="col col-md-6">							
-		<img src="images/templatemo_tn_1.jpg" alt="Pic 1" class="img-thumbnail img-responsive">
-		<h4>Mauris in erat justo</h4>
-		<p>Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo.</p>
-		<p><a href="#" class="btn btn-primary" role="button">View</a></p>
+		<!-- <img src="images/templatemo_tn_1.jpg" alt="Pic 1" class="img-thumbnail img-responsive"> -->
+		<!-- <img src="admin/images/news/<?php echo $row['image']?>" alt="<?php echo $row['image']?>" class="img-thumbnail img-responsive"> -->
+		<?php 
+				if(!empty($row['image']))
+				{
+					echo "<img src='images/news/{$row['image']}' alt='{$row['image']}'  height='100px' class='img-thumbnail img-responsive'>";
+				}else
+				{
+					echo '';
+				}			
+			?>
+		<h4><?php echo $row['title']?></h4>
+		<p><?php echo $row['description']?></p>
+		<p><a href="?act=view&id=<?php echo $row['id']?>" class="btn btn-primary" role="button">View</a></p>
 	</div>
+	<?php }?>
+
+	<!-- 
 	<div class="col col-md-6">
 		<img src="images/templatemo_tn_2.jpg" alt="Pic 2" class="img-thumbnail img-responsive">
 		<h4>Etiam pharetra</h4>
@@ -31,5 +61,5 @@
 		<h4>Duis sed odio</h4>
 		<p>Curabitur blandit, velit a rutrum cursus, mi massa porta nulla, nec ornare nunc leo sit amet ligula. Praesent risus purus, ultrices ac sollicitudin in, lacinia id ligula. Morbi in dictum nunc.</p>
 		<p><a href="#" class="btn btn-primary" role="button">View</a></p>
-	</div>	           
+	</div>	            -->
 </article>

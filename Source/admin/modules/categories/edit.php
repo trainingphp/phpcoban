@@ -10,7 +10,6 @@
 
 	if(isset($_POST['btnUpdate'])){
 		$name = isset($_POST['txtName']) ? $_POST['txtName'] : '';
-
 		if($name != ''){
 			$sql_upd_cate = sprintf("UPDATE categories 
 				SET name='%s' WHERE id=%d",$name,$id);
@@ -23,7 +22,7 @@
 	}
 ?>
 <div>
-	<p id="power">Cập nhật quyền cho tài khoản</p>
+	<p id="power">Cập nhật chuyên mục </p>
 	<fieldset>
 		<legend>Cập nhật thông tin</legend>
 		<p>(*) Thông tin bắt buộc</p>

@@ -15,6 +15,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="templatemo_style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="flexslider.css" type="text/css" media="screen" />
+    <<link rel="stylesheet" href="css/styleindex.css">
   	<script src="slider/modernizr.js"></script>
 </head>
 <body class="templatemo_juice_bg">
